@@ -26,16 +26,13 @@ class CharacterFragment : Fragment() {
     private val list = listOf<Character>()
     private lateinit var viewModel: CharacterViewModel
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        initViewModel()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_character, container, false)
+
+        initViewModel()
 
         initViews(view)
 
@@ -49,6 +46,8 @@ class CharacterFragment : Fragment() {
 
     private fun initViewModel() {
         viewModel = ViewModelProviders.of(this).get(CharacterViewModel::class.java)
+
+        viewModel.initState()
 
         viewModel.viewState.observe(viewLifecycleOwner, Observer { state ->
             state?.let {

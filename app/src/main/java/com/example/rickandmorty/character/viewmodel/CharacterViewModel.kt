@@ -21,12 +21,11 @@ class CharacterViewModel : ViewModel() {
 
     fun initState() {
         viewModelScope.launch(Dispatchers.IO) {
-            event.value = CharacterEvent.Loading
             try {
                 val character: CharacterResult = repository.getCharacters()
                 state.value = CharacterState.CharactersListSuccess(character.characters)
             } catch (ex: Exception) {
-                ex.message?.let { errorApi(it) }
+               ex.message
             }
         }
     }
