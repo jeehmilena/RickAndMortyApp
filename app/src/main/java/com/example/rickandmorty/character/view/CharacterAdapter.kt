@@ -28,7 +28,7 @@ class CharacterAdapter(var list: List<Character>) :
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var characterName = itemView.findViewById<TextView>(R.id.character_name)
-        var characterImage = itemView.findViewById<ImageView>(R.id.character_name)
+        var characterImage = itemView.findViewById<ImageView>(R.id.character_image)
 
         fun onBind(character: Character) {
             characterName.text = character.name
