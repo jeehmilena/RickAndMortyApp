@@ -35,4 +35,9 @@ class CharacterAdapter(var list: List<Character>) :
             Picasso.get().load(character.image).into(characterImage)
         }
     }
+
+    fun update(list: List<Character>){
+        this.list = list
+        notifyDataSetChanged()
+    }
 }

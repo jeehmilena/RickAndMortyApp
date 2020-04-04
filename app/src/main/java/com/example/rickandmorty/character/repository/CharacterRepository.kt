@@ -5,7 +5,5 @@ import com.example.rickandmorty.network.RetrofitService
 
 class CharacterRepository {
 
-    suspend fun getCharacters(): CharacterResult {
-        return RetrofitService.service.getCharacters()
-    }
+    suspend fun getCharacters(): CharacterResult = RetrofitService.service.getCharacters()
 }
