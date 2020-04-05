@@ -1,15 +1,19 @@
-package com.example.rickandmorty.character.view
+package com.example.rickandmorty.character.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavHost
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.rickandmorty.R
 import com.example.rickandmorty.character.model.Character
+import com.example.rickandmorty.character.view.adapter.CharacterAdapter
 import com.example.rickandmorty.character.viewmodel.CharacterViewModel
 import com.example.rickandmorty.character.viewmodel.characterinterector.CharacterInterector
 import com.example.rickandmorty.character.viewmodel.characterstate.CharacterState
@@ -19,8 +23,15 @@ import kotlinx.android.synthetic.main.fragment_character.*
 /**
  * A simple [Fragment] subclass.
  */
+
+const val CHARACTER_DETAIL = "character"
+
 class CharacterFragment : Fragment() {
-    private val adapter: CharacterAdapter by lazy { CharacterAdapter(ArrayList()) }
+    private val adapter: CharacterAdapter by lazy {
+        CharacterAdapter(
+            ArrayList()
+        ) { character -> characterDetails(character) }
+    }
 
     private val viewModel: CharacterViewModel by lazy {
         ViewModelProvider(this).get(
@@ -62,5 +73,13 @@ class CharacterFragment : Fragment() {
 
     private fun showErrorMessage(message: String) {
         Snackbar.make(recyclerViewCharacter, message, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun characterDetails(character: Character) {
+        var bundle = bundleOf(CHARACTER_DETAIL to character)
+
+        NavHostFragment.findNavController(this).navigate(
+            R.id.action_navigation_character_to_navigation_character_detail, bundle
+        )
     }
 }

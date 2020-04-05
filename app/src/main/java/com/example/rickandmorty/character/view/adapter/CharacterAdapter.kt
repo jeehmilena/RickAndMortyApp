@@ -1,4 +1,4 @@
-package com.example.rickandmorty.character.view
+package com.example.rickandmorty.character.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +10,15 @@ import com.example.rickandmorty.R
 import com.example.rickandmorty.character.model.Character
 import com.squareup.picasso.Picasso
 
-class CharacterAdapter(var list: List<Character>) :
+class CharacterAdapter(var list: List<Character>, private val clickListener: (Character) -> Unit) :
     RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_recycler_view_character, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(
+            view
+        )
     }
 
     override fun getItemCount(): Int = list.size
@@ -24,11 +26,15 @@ class CharacterAdapter(var list: List<Character>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val character = list[position]
         holder.onBind(character)
+
+        holder.itemView.setOnClickListener {
+            clickListener(character)
+        }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var characterName = itemView.findViewById<TextView>(R.id.character_name)
-        var characterImage = itemView.findViewById<ImageView>(R.id.character_image)
+        private var characterName = itemView.findViewById<TextView>(R.id.character_name)
+        private var characterImage = itemView.findViewById<ImageView>(R.id.character_image)
 
         fun onBind(character: Character) {
             characterName.text = character.name
