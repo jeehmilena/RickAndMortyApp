@@ -3,6 +3,6 @@ package com.example.rickandmorty.character.viewmodel.characterinterector
 import com.example.rickandmorty.character.model.Character
 
 sealed class CharacterInterector {
-    object ShowList: CharacterInterector()
-    data class CharacterDetail(val character: Character): CharacterInterector()
+    data class ShowList(val page: Int) : CharacterInterector()
+    data class CharacterDetail(val character: Character) : CharacterInterector()
 }

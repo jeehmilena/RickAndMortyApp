@@ -1,14 +1,11 @@
 package com.example.rickandmorty.character.view.fragments
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavHost
-import androidx.navigation.Navigation
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.example.rickandmorty.R
 import com.example.rickandmorty.character.model.Character

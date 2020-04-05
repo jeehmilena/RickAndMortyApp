@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.NonNull
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavHost
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.R
 import com.example.rickandmorty.character.model.Character
 import com.example.rickandmorty.character.view.adapter.CharacterAdapter
@@ -28,6 +30,7 @@ import kotlinx.android.synthetic.main.fragment_character.*
 const val CHARACTER_DETAIL = "character"
 
 class CharacterFragment : Fragment() {
+    private var page = 1
     private val adapter: CharacterAdapter by lazy {
         CharacterAdapter(
             ArrayList(), viewModel
@@ -74,7 +77,7 @@ class CharacterFragment : Fragment() {
             }
         })
 
-        viewModel.interpret(CharacterInterector.ShowList)
+        viewModel.interpret(CharacterInterector.ShowList(page))
     }
 
     private fun showListCharacters(characters: List<Character>) {
@@ -94,6 +97,34 @@ class CharacterFragment : Fragment() {
                 loading.visibility = View.GONE
             }
         }
+    }
+
+
+    private fun scrollPaginationList() {
+
+        recyclerViewCharacter.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(@NonNull recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+
+            override fun onScrolled(
+                @NonNull recyclerView: RecyclerView, dx: Int, dy: Int
+            ) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager?
+                val totalItemCount: Int = layoutManager?.itemCount ?: 0
+                val lastVisible: Int = layoutManager?.findLastVisibleItemPosition() ?: 0
+                val ultimoItem = lastVisible + 5 >= totalItemCount
+
+                when {
+                    totalItemCount > 0 && ultimoItem -> {
+                        page++
+                        viewModel.interpret(CharacterInterector.ShowList(page))
+                    }
+                }
+            }
+        })
     }
 
     private fun characterDetails(character: Character) {

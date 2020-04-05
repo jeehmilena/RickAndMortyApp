@@ -5,5 +5,5 @@ import com.example.rickandmorty.character.repository.CharacterRepository
 class CharacterUseCase {
     private val repository = CharacterRepository()
 
-    suspend fun getCharacterResult() = repository.getCharacters()
+    suspend fun getCharacterResult(page: Int) = repository.getCharacters(page)
 }

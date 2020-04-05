@@ -23,17 +23,17 @@ class CharacterViewModel : ViewModel() {
 
     fun interpret(interector: CharacterInterector) {
         when (interector) {
-            is CharacterInterector.ShowList -> getCharacters()
+            is CharacterInterector.ShowList -> getCharacters(interector.page)
             is CharacterInterector.CharacterDetail -> getDetail(interector.character)
         }
     }
 
-    private fun getCharacters() {
+    private fun getCharacters(page: Int) {
         viewModelScope.launch {
             event.value = CharacterEvent.Loading(true)
             try {
                 val character: CharacterResult = withContext(Dispatchers.IO) {
-                    useCase.getCharacterResult()
+                    useCase.getCharacterResult(page)
                 }
                 state.value = CharacterState.CharactersListSuccess(character.characters)
                 event.value = CharacterEvent.Loading(false)

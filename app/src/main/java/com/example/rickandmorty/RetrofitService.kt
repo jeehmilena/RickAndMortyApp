@@ -1,5 +1,6 @@
-package com.example.rickandmorty.network
+package com.example.rickandmorty
 
+import com.example.rickandmorty.character.network.Api
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -29,7 +30,8 @@ class RetrofitService {
                 .client(httpClient.build())
                 .build()
 
-            service = retrofit.create(Api::class.java)
+            service = retrofit.create(
+                Api::class.java)
 
         }
     }
