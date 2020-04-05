@@ -54,6 +54,7 @@ class CharacterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerViewCharacter.layoutManager = GridLayoutManager(context, 2)
         recyclerViewCharacter.adapter = adapter
+        scrollPaginationList()
         initViewModel()
     }
 
@@ -81,7 +82,7 @@ class CharacterFragment : Fragment() {
     }
 
     private fun showListCharacters(characters: List<Character>) {
-        adapter.update(characters)
+        adapter.update(characters.toMutableList())
     }
 
     private fun showErrorMessage(message: String) {
@@ -103,10 +104,6 @@ class CharacterFragment : Fragment() {
     private fun scrollPaginationList() {
 
         recyclerViewCharacter.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(@NonNull recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-            }
-
             override fun onScrolled(
                 @NonNull recyclerView: RecyclerView, dx: Int, dy: Int
             ) {
@@ -117,11 +114,11 @@ class CharacterFragment : Fragment() {
                 val lastVisible: Int = layoutManager?.findLastVisibleItemPosition() ?: 0
                 val ultimoItem = lastVisible + 5 >= totalItemCount
 
-                when {
-                    totalItemCount > 0 && ultimoItem -> {
-                        page++
-                        viewModel.interpret(CharacterInterector.ShowList(page))
-                    }
+                if (totalItemCount > 0 && ultimoItem &&
+                    viewModel.viewEvent.value == CharacterEvent.Loading(false)
+                ) {
+                    page++
+                    viewModel.interpret(CharacterInterector.ShowList(page))
                 }
             }
         })

@@ -12,7 +12,10 @@ import com.example.rickandmorty.character.viewmodel.CharacterViewModel
 import com.example.rickandmorty.character.viewmodel.characterinterector.CharacterInterector
 import com.squareup.picasso.Picasso
 
-class CharacterAdapter(var list: List<Character>, private val viewModel: CharacterViewModel) :
+class CharacterAdapter(
+    var list: MutableList<Character>,
+    private val viewModel: CharacterViewModel
+) :
     RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -44,8 +47,13 @@ class CharacterAdapter(var list: List<Character>, private val viewModel: Charact
         }
     }
 
-    fun update(list: List<Character>){
-        this.list = list
+    fun update(list: MutableList<Character>) {
+
+        if (this.list.isEmpty()) {
+            this.list = list
+        } else {
+            this.list.addAll(list)
+        }
         notifyDataSetChanged()
     }
 }
