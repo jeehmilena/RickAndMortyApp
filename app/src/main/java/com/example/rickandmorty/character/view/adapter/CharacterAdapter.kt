@@ -8,9 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rickandmorty.R
 import com.example.rickandmorty.character.model.Character
+import com.example.rickandmorty.character.viewmodel.CharacterViewModel
+import com.example.rickandmorty.character.viewmodel.characterinterector.CharacterInterector
 import com.squareup.picasso.Picasso
 
-class CharacterAdapter(var list: List<Character>, private val clickListener: (Character) -> Unit) :
+class CharacterAdapter(var list: List<Character>, val viewModel: CharacterViewModel) :
     RecyclerView.Adapter<CharacterAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,7 +30,7 @@ class CharacterAdapter(var list: List<Character>, private val clickListener: (Ch
         holder.onBind(character)
 
         holder.itemView.setOnClickListener {
-            clickListener(character)
+            viewModel.interpret(CharacterInterector.CharacterDetail(character))
         }
     }
 

@@ -15,6 +15,7 @@ import com.example.rickandmorty.R
 import com.example.rickandmorty.character.model.Character
 import com.example.rickandmorty.character.view.adapter.CharacterAdapter
 import com.example.rickandmorty.character.viewmodel.CharacterViewModel
+import com.example.rickandmorty.character.viewmodel.characterevent.CharacterEvent
 import com.example.rickandmorty.character.viewmodel.characterinterector.CharacterInterector
 import com.example.rickandmorty.character.viewmodel.characterstate.CharacterState
 import com.google.android.material.snackbar.Snackbar
@@ -29,8 +30,8 @@ const val CHARACTER_DETAIL = "character"
 class CharacterFragment : Fragment() {
     private val adapter: CharacterAdapter by lazy {
         CharacterAdapter(
-            ArrayList()
-        ) { character -> characterDetails(character) }
+            ArrayList(), viewModel
+        )
     }
 
     private val viewModel: CharacterViewModel by lazy {
@@ -64,6 +65,15 @@ class CharacterFragment : Fragment() {
             }
         })
 
+        viewModel.viewEvent.observe(viewLifecycleOwner, Observer { event ->
+            event?.let {
+                when (it) {
+                    is CharacterEvent.Loading -> showLoading(it.status)
+                    is CharacterEvent.ShowDetail -> characterDetails(it.character)
+                }
+            }
+        })
+
         viewModel.interpret(CharacterInterector.ShowList)
     }
 
@@ -75,9 +85,19 @@ class CharacterFragment : Fragment() {
         Snackbar.make(recyclerViewCharacter, message, Snackbar.LENGTH_LONG).show()
     }
 
-    private fun characterDetails(character: Character) {
-        var bundle = bundleOf(CHARACTER_DETAIL to character)
+    private fun showLoading(status: Boolean) {
+        when {
+            status -> {
+                loading.visibility = View.VISIBLE
+            }
+            else -> {
+                loading.visibility = View.GONE
+            }
+        }
+    }
 
+    private fun characterDetails(character: Character) {
+        val bundle = bundleOf(CHARACTER_DETAIL to character)
         NavHostFragment.findNavController(this).navigate(
             R.id.action_navigation_character_to_navigation_character_detail, bundle
         )

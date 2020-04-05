@@ -1,5 +1,6 @@
 package com.example.rickandmorty.home.view
 
+import android.app.PendingIntent.getActivity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -27,6 +28,5 @@ class HomeActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#24325F")))
-
     }
 }

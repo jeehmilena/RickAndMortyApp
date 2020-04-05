@@ -3,6 +3,7 @@ package com.example.rickandmorty.character.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.rickandmorty.character.model.Character
 import com.example.rickandmorty.character.model.CharacterResult
 import com.example.rickandmorty.character.usecase.CharacterUseCase
 import com.example.rickandmorty.character.viewmodel.characterevent.CharacterEvent
@@ -23,20 +24,27 @@ class CharacterViewModel : ViewModel() {
     fun interpret(interector: CharacterInterector) {
         when (interector) {
             is CharacterInterector.ShowList -> getCharacters()
+            is CharacterInterector.CharacterDetail -> getDetail(interector.character)
         }
     }
 
     private fun getCharacters() {
         viewModelScope.launch {
+            event.value = CharacterEvent.Loading(true)
             try {
                 val character: CharacterResult = withContext(Dispatchers.IO) {
                     useCase.getCharacterResult()
                 }
                 state.value = CharacterState.CharactersListSuccess(character.characters)
+                event.value = CharacterEvent.Loading(false)
             } catch (ex: Exception) {
                 errorApi(ex.message.toString())
             }
         }
+    }
+
+    private fun getDetail(character: Character){
+        event.value = CharacterEvent.ShowDetail(character)
     }
 
     private fun errorApi(message: String) {
