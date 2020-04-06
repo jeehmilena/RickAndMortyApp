@@ -13,4 +13,5 @@
     <string name="character_status_detail">Status: %s</string>
     <string name="character_species_detail">Species: %s</string>
     <string name="character_origin_detail">Origin: %s</string>
+    <string name="episodes">Episodes:</string>
 </resources>

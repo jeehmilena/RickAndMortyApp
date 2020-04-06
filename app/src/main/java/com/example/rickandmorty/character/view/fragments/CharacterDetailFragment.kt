@@ -7,15 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rickandmorty.R
 import com.example.rickandmorty.character.model.Character
+import com.example.rickandmorty.character.view.adapter.CharacterAdapter
+import com.example.rickandmorty.character.view.adapter.EpisodesCharacterDetailAdapter
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_character.*
 import kotlinx.android.synthetic.main.fragment_character_detail.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class CharacterDetailFragment : Fragment() {
+    private val adapter: EpisodesCharacterDetailAdapter by lazy {
+        EpisodesCharacterDetailAdapter(
+            ArrayList()
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +60,10 @@ class CharacterDetailFragment : Fragment() {
             R.string.character_origin_detail,
             character?.origin?.name
         )
+
+        adapter.update(character?.episode as MutableList<String>)
+        recyclerViewEpisodesDetailsCharacter.adapter = adapter
+        recyclerViewEpisodesDetailsCharacter.layoutManager = LinearLayoutManager(context)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
