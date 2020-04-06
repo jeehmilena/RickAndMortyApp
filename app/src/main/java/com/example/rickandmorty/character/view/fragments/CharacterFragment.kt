@@ -100,7 +100,6 @@ class CharacterFragment : Fragment() {
         }
     }
 
-
     private fun scrollPaginationList() {
 
         recyclerViewCharacter.addOnScrollListener(object : RecyclerView.OnScrollListener() {
