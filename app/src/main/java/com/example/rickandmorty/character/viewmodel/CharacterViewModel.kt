@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class CharacterViewModel : ViewModel() {
-
     private var state: MutableLiveData<CharacterState> = MutableLiveData()
     val viewState = state
     private var event: MutableLiveData<CharacterEvent> = MutableLiveData()
