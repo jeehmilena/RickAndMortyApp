@@ -1,5 +1,6 @@
 package com.example.rickandmorty.episode.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -37,7 +38,8 @@ class EpisodeViewModel : ViewModel() {
                 state.value = EpisodeState.EpisodesListSuccess(episode.episodes)
                 event.value = EpisodeEvent.Loading(false)
             } catch (ex: Exception) {
-                errorApi(ex.message.toString())
+                Log.i("excpetion episode", "-----> ${ex.message}")
+                event.value = EpisodeEvent.Loading(false)
             }
         }
     }
@@ -45,9 +47,4 @@ class EpisodeViewModel : ViewModel() {
     private fun getDetail(episode: Episode) {
         event.value = EpisodeEvent.ShowEpisodeDetail(episode)
     }
-
-    private fun errorApi(message: String) {
-        state.value = EpisodeState.EpisodesListError(message)
-    }
-
 }

@@ -41,6 +41,7 @@ class EpisodeAdapter(var listEpisodes: MutableList<Episode>) :
             when (episode.episode) {
                 "S01E01", "S02E01", "S03E01" -> {
                     itemView.episode_season.text = episode.episode
+                    itemView.linearLayoutSeason.visibility = View.VISIBLE
                 }
                 else ->
                     itemView.linearLayoutSeason.visibility = View.GONE

@@ -1,11 +1,11 @@
-package com.example.rickandmorty.episode.view
+package com.example.rickandmorty.episode.view.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.NonNull
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +17,6 @@ import com.example.rickandmorty.episode.viewmodel.EpisodeViewModel
 import com.example.rickandmorty.episode.viewmodel.episodeevent.EpisodeEvent
 import com.example.rickandmorty.episode.viewmodel.episodeinterector.EpisodeInterector
 import com.example.rickandmorty.episode.viewmodel.episodestate.EpisodeState
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_episode.*
 
 /**
@@ -58,7 +57,6 @@ class EpisodeFragment : Fragment() {
             state?.let {
                 when (it) {
                     is EpisodeState.EpisodesListSuccess -> showListEpisodes(it.episodes)
-                    is EpisodeState.EpisodesListError -> showErrorMessage(it.error)
                 }
             }
         })
@@ -76,10 +74,6 @@ class EpisodeFragment : Fragment() {
 
     private fun showListEpisodes(episodes: List<Episode>) {
         adapter.update(episodes.toMutableList())
-    }
-
-    private fun showErrorMessage(message: String) {
-        Snackbar.make(recyclerViewEpisodes, message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun showLoading(status: Boolean) {
