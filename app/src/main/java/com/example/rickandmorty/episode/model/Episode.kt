@@ -1,7 +1,10 @@
 package com.example.rickandmorty.episode.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Episode(
     @SerializedName("air_date")
     val air_date: String,
@@ -17,4 +20,4 @@ data class Episode(
     val name: String,
     @SerializedName("url")
     val url: String
-)
+) : Parcelable
