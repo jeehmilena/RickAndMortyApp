@@ -31,7 +31,6 @@ class CharacterAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val character = list[position]
         holder.onBind(character)
-
         holder.itemView.setOnClickListener {
             viewModel.interpret(CharacterInterector.CharacterDetail(character))
         }
