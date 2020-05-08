@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rickandmorty.Constants.CHARACTER_DETAIL_KEY
 import com.example.rickandmorty.R
 import com.example.rickandmorty.character.model.Character
 import com.example.rickandmorty.character.view.adapter.CharacterAdapter
@@ -26,8 +27,6 @@ import kotlinx.android.synthetic.main.fragment_character.*
 /**
  * A simple [Fragment] subclass.
  */
-
-const val CHARACTER_DETAIL = "character"
 
 class CharacterFragment : Fragment() {
     private var page = 1
@@ -124,7 +123,7 @@ class CharacterFragment : Fragment() {
     }
 
     private fun characterDetails(character: Character) {
-        val bundle = bundleOf(CHARACTER_DETAIL to character)
+        val bundle = bundleOf(CHARACTER_DETAIL_KEY to character)
         NavHostFragment.findNavController(this).navigate(
             R.id.action_navigation_character_to_navigation_character_detail, bundle
         )

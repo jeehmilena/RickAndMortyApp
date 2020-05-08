@@ -9,9 +9,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 const val BASE_URL = "https://api.themoviedb.org/3/"
 
-class SerieService {
+class SeasonService {
     companion object {
-        val SERVICE: SerieAPI
+        val SERVICE: SeasonAPI
 
         init {
             val logging = HttpLoggingInterceptor()
@@ -30,7 +30,7 @@ class SerieService {
                 .build()
 
             SERVICE = retrofit.create(
-                SerieAPI::class.java
+                SeasonAPI::class.java
             )
         }
     }

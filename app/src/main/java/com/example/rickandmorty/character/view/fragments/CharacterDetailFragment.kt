@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import com.example.rickandmorty.Constants.CHARACTER_DETAIL_KEY
 import com.example.rickandmorty.R
 import com.example.rickandmorty.character.model.Character
 import com.squareup.picasso.Picasso
@@ -32,7 +33,7 @@ class CharacterDetailFragment : Fragment() {
     }
 
     private fun showInfoDetailsCharacter() {
-        val character = arguments?.getParcelable<Character>(CHARACTER_DETAIL)
+        val character = arguments?.getParcelable<Character>(CHARACTER_DETAIL_KEY)
         Picasso.get().load(character?.image).into(character_image_detail)
         character_name_datail_info.text = getString(
             R.string.character_name_detail,

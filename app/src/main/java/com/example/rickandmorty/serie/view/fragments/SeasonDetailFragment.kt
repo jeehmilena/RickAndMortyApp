@@ -7,42 +7,50 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.rickandmorty.Constants.SEASON_NUMBER
 import com.example.rickandmorty.R
-import com.example.rickandmorty.serie.model.series.Season
-import com.example.rickandmorty.serie.view.adapter.SeasonPageAdapter
-import com.example.rickandmorty.serie.viewmodel.SeasonViewModel
+import com.example.rickandmorty.serie.model.season.EpisodeResult
+import com.example.rickandmorty.serie.view.adapter.EpisodesAdapter
+import com.example.rickandmorty.serie.viewmodel.SeasonDetailViewModel
 import com.example.rickandmorty.serie.viewmodel.seasonevent.SeasonEvent
 import com.example.rickandmorty.serie.viewmodel.seasoninterector.SeasonInterector
 import com.example.rickandmorty.serie.viewmodel.seasonstate.SeasonState
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_seasons.*
+import kotlinx.android.synthetic.main.fragment_season_detail.*
 
 /**
  * A simple [Fragment] subclass.
  */
-
-class SeasonFragment : Fragment() {
-    private val pageAdapter: SeasonPageAdapter by lazy {
-        SeasonPageAdapter(ArrayList(), this)
+class SeasonDetailFragment : Fragment() {
+    private val adapter: EpisodesAdapter by lazy {
+        EpisodesAdapter(ArrayList())
     }
 
-    private val viewModel: SeasonViewModel by lazy {
+    private val viewModel: SeasonDetailViewModel by lazy {
         ViewModelProvider(this).get(
-            SeasonViewModel::class.java
+            SeasonDetailViewModel::class.java
         )
     }
+
+    private var seasonNumber: Long = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_seasons, container, false)
+        return inflater.inflate(R.layout.fragment_season_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        arguments?.takeIf { it.containsKey(SEASON_NUMBER) }?.apply {
+            seasonNumber = getLong(SEASON_NUMBER)
+        }
+
         initViewModel()
+        recyclerViewSeasonDetails.layoutManager = LinearLayoutManager(context)
+        recyclerViewSeasonDetails.adapter = adapter
     }
 
     private fun initViewModel() {
@@ -50,7 +58,7 @@ class SeasonFragment : Fragment() {
         viewModel.viewState.observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 when (it) {
-                    is SeasonState.SeasonsListSuccess -> showListSeasons(it.seasons)
+                    is SeasonState.SeasonDetailsListSucces -> showListEpisodes(it.episodes)
                 }
             }
         })
@@ -63,28 +71,22 @@ class SeasonFragment : Fragment() {
             }
         })
 
-        viewModel.interpret(SeasonInterector.ShowListSeasons)
+        viewModel.interpret(SeasonInterector.ShowListSeasonDetail(seasonNumber))
     }
 
-    private fun showListSeasons(seasons: List<Season>) {
-        pageAdapter.update(seasons.toMutableList())
-
-        viewPagerSeasonDetails.adapter = pageAdapter
-
-        TabLayoutMediator(tabSeasons, viewPagerSeasonDetails,
-            fun(tab: TabLayout.Tab, position: Int) {
-                tab.text = seasons[position].name
-            }).attach()
+    private fun showListEpisodes(episodes: List<EpisodeResult>) {
+        adapter.update(episodes.toMutableList())
     }
 
     private fun showLoading(status: Boolean) {
         when {
             status -> {
-                loadingEpisodes.visibility = View.VISIBLE
+                loading.visibility = View.VISIBLE
             }
             else -> {
-                loadingEpisodes.visibility = View.GONE
+                loading.visibility = View.GONE
             }
         }
     }
+
 }
