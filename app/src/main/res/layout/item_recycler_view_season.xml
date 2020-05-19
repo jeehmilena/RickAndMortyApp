@@ -19,6 +19,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:src="@mipmap/character"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,8 +38,9 @@
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/dark_blue"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold"
+            android:maxLines="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/episode_image"
             app:layout_constraintTop_toTopOf="@+id/episode_image" />

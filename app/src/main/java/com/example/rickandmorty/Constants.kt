@@ -6,4 +6,6 @@ object Constants {
     const val URL_BASE_IMAGE = "https://image.tmdb.org/t/p/w500"
     const val CHARACTER_DETAIL_KEY = "character"
     const val SEASON_NUMBER = "season_number"
+    const val DATE_FORMAT = "dd/MM/yyyy"
+    const val DATE_FORMAT_API = "yyyy-MM-dd"
 }
