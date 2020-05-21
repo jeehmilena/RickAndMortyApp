@@ -1,4 +1,4 @@
-package com.example.rickandmorty.seasons.network
+package com.example.rickandmorty.network
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.GsonBuilder
@@ -9,9 +9,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 const val BASE_URL = "https://api.themoviedb.org/3/"
 
-class SeasonService {
+class SerieService {
     companion object {
-        val SERVICE: SeasonAPI
+        val SERVICE: SerieAPI
 
         init {
             val logging = HttpLoggingInterceptor()
@@ -30,7 +30,7 @@ class SeasonService {
                 .build()
 
             SERVICE = retrofit.create(
-                SeasonAPI::class.java
+                SerieAPI::class.java
             )
         }
     }

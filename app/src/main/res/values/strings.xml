@@ -18,4 +18,6 @@
     <string name="episode_air_date_detail">Date: %s</string>
     <string name="episode_season_detail">Season: %s</string>
     <string name="episode_number">Episode number: %s</string>
+    <string name="created_by">Created by:</string>
+    <string name="genres">Genres:</string>
 </resources>

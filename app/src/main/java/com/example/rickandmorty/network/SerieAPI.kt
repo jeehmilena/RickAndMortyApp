@@ -1,4 +1,4 @@
-package com.example.rickandmorty.seasons.network
+package com.example.rickandmorty.network
 
 import com.example.rickandmorty.seasons.model.season.Season
 import com.example.rickandmorty.seasons.model.series.SerieResult
@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface SeasonAPI {
+interface SerieAPI {
 
     @GET("tv/{tv_id}")
     suspend fun getSerie(

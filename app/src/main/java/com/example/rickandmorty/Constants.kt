@@ -8,4 +8,6 @@ object Constants {
     const val SEASON_NUMBER = "season_number"
     const val DATE_FORMAT = "dd/MM/yyyy"
     const val DATE_FORMAT_API = "yyyy-MM-dd"
+    const val CREATOR = "creator"
+    const val GENRES = "genres"
 }
