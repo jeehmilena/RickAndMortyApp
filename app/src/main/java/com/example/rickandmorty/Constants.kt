@@ -8,6 +8,6 @@ object Constants {
     const val SEASON_NUMBER = "season_number"
     const val DATE_FORMAT = "dd/MM/yyyy"
     const val DATE_FORMAT_API = "yyyy-MM-dd"
-    const val CREATOR = "creator"
-    const val GENRES = "genres"
+    const val DAN_HARMON_IMAGE = "https://animationfestival.no/2015/media/2019/09/01-Dan-Harmon-1.jpg"
+
 }
